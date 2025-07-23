@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Nunito } from "next/font/google";
 import "./globals.css";
+import NavBar from "@/components/common/NavBar";
+import { BookmarkProvider } from "@/context/BookmarkContext";
+import ReactQueryProvider from "@/provider/ReactQueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const nunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-nunito",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,10 +25,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${nunito.variable} font-sans antialiased bg-white`}>
+        <NavBar />
+        <ReactQueryProvider>
+          <BookmarkProvider>
+            <main className="pt-24">{children}</main>
+            <Toaster />
+          </BookmarkProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
