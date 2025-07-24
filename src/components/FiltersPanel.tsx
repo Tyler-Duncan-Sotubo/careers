@@ -55,7 +55,7 @@ export default function FiltersPanel({
   ) => void;
 }) {
   return (
-    <div className="col-span-1 md:sticky top-32 self-start border-2 shadow-sm rounded-xl max-h-[90vh] overflow-auto p-6 space-y-10">
+    <div className="md:col-span-1 w-full md:sticky top-32 self-start border-2 shadow-sm rounded-xl max-h-[90vh] overflow-auto p-6 space-y-10">
       <div>
         <div className="flex justify-between items-center">
           <p className="text-lg font-semibold">Filters</p>

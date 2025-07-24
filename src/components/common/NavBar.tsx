@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const navData = [
   { href: "/jobs", label: "Find Job" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact Us" },
+  // { href: "/about", label: "About Us" },
+  // { href: "/contact", label: "Contact Us" },
 ];
 
 const NavBar = () => {

@@ -23,7 +23,7 @@ export function LocationSelector({
     [];
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center w-full">
       {/* State Select */}
       <Select value={selectedState} onValueChange={setSelectedState}>
         <SelectTrigger className="w-32 h-12">

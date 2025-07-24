@@ -20,10 +20,10 @@ export default function SearchBar({
     <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
       <LocationSelector location={location} setLocation={setLocation} />
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full">
         <Input
           placeholder="Search for jobs..."
-          className="h-12 w-60 sm:w-[540px]"
+          className="h-12 w-full sm:w-[540px]"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           leftIcon={<FaMagnifyingGlass className="h-5 w-5 text-gray-500" />}
