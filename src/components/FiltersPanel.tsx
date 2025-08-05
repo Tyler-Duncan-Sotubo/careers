@@ -2,7 +2,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 
 // For clarity and mapping
 const jobTypeOptions = [
@@ -58,10 +57,7 @@ export default function FiltersPanel({
     <div className="md:col-span-1 w-full md:sticky top-32 self-start border-2 shadow-sm rounded-xl max-h-[90vh] overflow-auto p-6 space-y-10">
       <div>
         <div className="flex justify-between items-center">
-          <p className="text-lg font-semibold">Filters</p>
-          <Button variant="link" className="p-0">
-            Reset
-          </Button>
+          <p className="text-lg font-semibold mb-4">Filters</p>
         </div>
 
         <Separator className="mb-4" />
@@ -133,7 +129,7 @@ export default function FiltersPanel({
           value={salary}
           onValueChange={setSalary}
           min={20000} // 👈 minimum salary is now 20K
-          max={2000000} // 👈 adjust max as needed
+          max={10000000} // 👈 adjust max as needed
           step={5000}
         />
         <div className="flex justify-between mt-2 text-sm text-gray-600">

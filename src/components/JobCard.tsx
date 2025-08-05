@@ -71,7 +71,7 @@ export default function JobCard({ job }: { job: Job }) {
       </div>
 
       <div className="mt-4 flex justify-between items-center">
-        <p className="text-sm font-medium text-gray-800">
+        <p className="text-xs font-semibold text-gray-800">
           {formatCurrency(job.salaryRangeFrom)} -{" "}
           {formatCurrency(job.salaryRangeTo)}
           <span className="font-normal"> /Year</span>

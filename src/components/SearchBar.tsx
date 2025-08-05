@@ -17,7 +17,7 @@ export default function SearchBar({
   setLocation,
 }: SearchBarProps) {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
+    <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4 z-[99999] w-full">
       <LocationSelector location={location} setLocation={setLocation} />
 
       <div className="flex items-center gap-2 w-full">
@@ -26,9 +26,9 @@ export default function SearchBar({
           className="h-12 w-full sm:w-[540px]"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          leftIcon={<FaMagnifyingGlass className="h-5 w-5 text-gray-500" />}
+          leftIcon={<FaMagnifyingGlass className="h-5 w-5 text-gray-500 " />}
         />
-        <Button className="w-[20%] h-12">Search</Button>
+        <Button className="w-[20%] h-12 z-[99998]">Find Jobs</Button>
       </div>
     </div>
   );

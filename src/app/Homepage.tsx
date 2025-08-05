@@ -1,67 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios";
 import JobCard from "@/components/JobCard";
-import FiltersPanel from "@/components/FiltersPanel";
 import SearchBar from "@/components/SearchBar";
 import Loading from "@/components/ui/loading";
+import Image from "next/image";
 
 const fetchJobs = async (params: Record<string, any>) => {
   const res = await axiosInstance.get("/api/jobs/public", { params });
   return res.data.data;
 };
 
-export default function HomePage() {
+export default function JobBoardLanding() {
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
   const [location, setLocation] = useState("");
-  const [jobTypes, setJobTypes] = useState<string[]>([]);
-  const [employmentTypes, setEmploymentTypes] = useState<string[]>([]);
-  const [experienceLevel, setExperienceLevel] = useState<string[]>([]);
-  // Your controlled state
-  const [salary, setSalary] = useState<[number, number]>([0, 2000000]); // real values
-
-  // Debounced value
-  const [debouncedSalary, setDebouncedSalary] =
-    useState<[number, number]>(salary);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSalary(salary);
-    }, 500); // 500ms delay
-
-    return () => clearTimeout(handler); // Cleanup on salary change
-  }, [salary]);
-
-  const toggleFilter = (
-    value: string,
-    list: string[],
-    setter: (values: string[]) => void
-  ) => {
-    setter(
-      list.includes(value) ? list.filter((v) => v !== value) : [...list, value]
-    );
-  };
-
-  const DEFAULT_SALARY_MIN = 5000;
-  const DEFAULT_SALARY_MAX = 1000000;
-
-  const shouldFilterSalary =
-    debouncedSalary[0] !== DEFAULT_SALARY_MIN ||
-    debouncedSalary[1] !== DEFAULT_SALARY_MAX;
+    const handler = setTimeout(() => setDebouncedSearch(search), 400);
+    return () => clearTimeout(handler);
+  }, [search]);
 
   const queryParams = {
-    search,
+    search: debouncedSearch,
     location,
-    jobType: jobTypes,
-    employmentType: employmentTypes,
-    experienceLevel,
-    ...(shouldFilterSalary && {
-      salaryMin: debouncedSalary[0],
-      salaryMax: debouncedSalary[1],
-    }),
   };
 
   const {
@@ -73,38 +38,62 @@ export default function HomePage() {
     queryFn: () => fetchJobs(queryParams),
   });
 
-  if (isLoading) return <Loading />;
-  if (isError) return <p>Error loading jobs</p>;
-
   return (
-    <div className="flex flex-col-reverse md:grid md:grid-cols-4 gap-8 min-h-screen p-4 sm:p-10 font-sans mb-10 sm:mb-0">
-      <FiltersPanel
-        jobTypes={jobTypes}
-        setJobTypes={setJobTypes}
-        experiences={experienceLevel}
-        setExperiences={setExperienceLevel}
-        employmentTypes={employmentTypes}
-        setEmploymentTypes={setEmploymentTypes}
-        salary={salary}
-        setSalary={setSalary}
-        toggleFilter={toggleFilter}
-      />
+    <main className="min-h-screen flex flex-col items-center mb-24">
+      {/* Hero Section Grid */}
+      <section className="w-full max-w-7xl flex flex-col-reverse px-4 md:grid grid-cols-1 md:grid-cols-2 items-center gap-12 ">
+        {/* Left: Headline and Search */}
+        <div className="w-full">
+          <h2 className="text-3xl sm:text-3xl font-extrabold mb-4 text-left space-y-3">
+            Your Career. <br />
+          </h2>
+          <h1 className="text-3xl sm:text-5xl font-extrabold mb-4 text-left space-y-3">
+            Your Centa<span className="text-monzo-error">HR</span> Advantage.
+          </h1>
+          <p className="text-lg text-gray-600 mb-8 text-left">
+            Discover roles at forward-thinking companies using centaHR.{" "}
+            <br className="hidden sm:block" />
+            Empower your growth. Simplify your journey. Powered by our trusted
+            HRIS platform.
+          </p>
+          <SearchBar
+            search={search}
+            setSearch={setSearch}
+            location={location}
+            setLocation={setLocation}
+          />
+        </div>
+        {/* Right: Image */}
+        <div className="flex justify-center md:justify-end">
+          <Image
+            src="/slider.png"
+            alt="Find your next job"
+            width={450}
+            height={300}
+            priority
+          />
+        </div>
+      </section>
 
-      <div className="md:col-span-3 space-y-8">
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-          location={location}
-          setLocation={setLocation}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {jobs.length === 0 ? (
-            <p className="text-gray-500 col-span-full">No jobs found.</p>
+      {/* Featured Jobs */}
+      <section className="w-full max-w-7xl px-4">
+        <h2 className="text-2xl font-bold mb-6">Featured Jobs</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {isLoading ? (
+            <Loading />
+          ) : isError ? (
+            <p className="text-red-500">Error loading featured jobs.</p>
+          ) : jobs.length === 0 ? (
+            <p className="text-gray-500 col-span-full text-center">
+              No featured jobs found.
+            </p>
           ) : (
-            jobs.map((job: any) => <JobCard key={job.id} job={job} />)
+            jobs
+              .slice(0, 6)
+              .map((job: any) => <JobCard key={job.id} job={job} />)
           )}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

@@ -1,8 +1,8 @@
 import React from "react";
-import HomePage from "../Homepage";
+import JobListing from "./_components/JobListing";
 
 const page = () => {
-  return <HomePage />;
+  return <JobListing />;
 };
 
 export default page;

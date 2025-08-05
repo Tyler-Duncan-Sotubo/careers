@@ -45,7 +45,7 @@ export default function CompanyJobsPage() {
   if (isError) return <p>Error loading company jobs.</p>;
 
   return (
-    <div className="min-h-screen p-8 sm:p-10 font-sans space-y-6">
+    <div className="min-h-screen p-4 sm:p-10 font-sans space-y-6">
       {companyName && (
         <div className="flex items-center gap-4 mb-6">
           <div className="w-14 h-14 relative bg-white rounded-md border shadow">

@@ -5,7 +5,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Loader2, FileDown } from "lucide-react";
 import { axiosInstance } from "@/lib/axios";
-import { getErrorMessage } from "@/utils/getErrorMessage";
 import { FileUploader } from "@/components/common/FileUploader";
 import { useCreateMutation } from "@/hooks/useCreateMutation";
 import { useQuery } from "@tanstack/react-query";
@@ -63,7 +62,9 @@ export default function OfferPage({ params }: { params: { token: string } }) {
       <div className="max-w-md mx-auto mt-20">
         <Alert variant="destructive">
           <AlertTitle>Access Denied</AlertTitle>
-          <AlertDescription>{getErrorMessage(queryError)}</AlertDescription>
+          <AlertDescription>
+            Please ensure you have a valid offer link.
+          </AlertDescription>
         </Alert>
       </div>
     );
@@ -108,7 +109,7 @@ export default function OfferPage({ params }: { params: { token: string } }) {
         </a>
       </div>
 
-      {offer?.status !== "pending" ? (
+      {offer?.status !== "pending" && offer?.status === "signed" ? (
         <div>
           <Alert variant="destructive" className="mt-4">
             <AlertTitle>Offer Status</AlertTitle>
