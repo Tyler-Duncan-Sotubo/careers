@@ -14,12 +14,20 @@ export default function JobDetails({ job }: { job: Job }) {
       </div>
 
       <div className="flex flex-wrap gap-2 text-sm mt-2">
-        <Badge variant="outline">{formatSource(job.jobType)}</Badge>
-        <Badge variant="outline">{formatSource(job.employmentType)}</Badge>
-        <Badge variant="outline">{formatSource(job.experienceLevel)}</Badge>
-        <Badge variant="outline">
-          {formatSource(job.qualification)} Degree
-        </Badge>
+        {job.jobType && (
+          <Badge variant="outline">{formatSource(job.jobType)}</Badge>
+        )}
+        {job.employmentType && (
+          <Badge variant="outline">{formatSource(job.employmentType)}</Badge>
+        )}
+        {job.experienceLevel && (
+          <Badge variant="outline">{formatSource(job.experienceLevel)}</Badge>
+        )}
+        {job.qualification && (
+          <Badge variant="outline">
+            {formatSource(job.qualification)} Degree
+          </Badge>
+        )}
       </div>
 
       <Separator />
