@@ -29,8 +29,8 @@ export default function JobCard({ job }: { job: Job }) {
       <div className="space-y-6">
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-center gap-4">
-            <div className="relative w-12 h-12 bg-gray-50 p-2 rounded-md">
-              <div className="relative w-12 h-12 bg-gray-50 p-2 rounded-md">
+            <div className="relative w-12 h-12 rounded-md">
+              <div className="relative w-14 h-14 rounded-md">
                 <Image
                   src={job.companyLogo || "/company.png"}
                   alt="Company Logo"
