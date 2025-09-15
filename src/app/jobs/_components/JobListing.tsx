@@ -8,6 +8,7 @@ import JobCard from "@/components/JobCard";
 import FiltersPanel from "@/components/FiltersPanel";
 import SearchBar from "@/components/SearchBar";
 import Loading from "@/components/ui/loading";
+import EmptyState from "@/components/ui/empty-state";
 
 const fetchJobs = async (params: Record<string, any>) => {
   const res = await axiosInstance.get("/api/jobs/public", { params });
@@ -81,7 +82,16 @@ export default function JobListing() {
     queryFn: () => fetchJobs(queryParams),
   });
 
-  if (isError) return <p>Error loading jobs</p>;
+  if (isError || jobs.length === 0)
+    return (
+      <div className="flex justify-center col-span-full mt-20">
+        <EmptyState
+          title="No jobs available"
+          description="Please try again later."
+          image="https://res.cloudinary.com/dw1ltt9iz/image/upload/v1757585356/job_ruuqp1.svg"
+        />
+      </div>
+    );
 
   return (
     <section className=" min-h-screen py-10">

@@ -14,7 +14,11 @@ const NavBar = () => {
   return (
     <div>
       <nav className="flex items-center justify-between px-8 bg-white shadow-md fixed top-0 z-[99999] w-full">
-        <ApplicationLogo className="h-16 w-16" src="/logo.png" alt="Logo" />
+        <ApplicationLogo
+          className="h-16 w-16"
+          src="https://res.cloudinary.com/dw1ltt9iz/image/upload/v1757584746/logo_dggjny.png"
+          alt="Logo"
+        />
 
         <div className="md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>

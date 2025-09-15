@@ -8,6 +8,7 @@ import JobCard from "@/components/JobCard";
 import SearchBar from "@/components/SearchBar";
 import Loading from "@/components/ui/loading";
 import Image from "next/image";
+import EmptyState from "@/components/ui/empty-state";
 
 const fetchJobs = async (params: Record<string, any>) => {
   const res = await axiosInstance.get("/api/jobs/public", { params });
@@ -66,7 +67,7 @@ export default function JobBoardLanding() {
         {/* Right: Image */}
         <div className="flex justify-center md:justify-end">
           <Image
-            src="/slider.png"
+            src="https://res.cloudinary.com/dw1ltt9iz/image/upload/v1757929811/slider_gefeok.png"
             alt="Find your next job"
             width={450}
             height={300}
@@ -81,8 +82,14 @@ export default function JobBoardLanding() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {isLoading ? (
             <Loading />
-          ) : isError ? (
-            <p className="text-red-500">Error loading featured jobs.</p>
+          ) : isError || jobs.length === 0 ? (
+            <div className="flex justify-center col-span-full mt-10">
+              <EmptyState
+                title="No jobs available"
+                description="Please try again later."
+                image="https://res.cloudinary.com/dw1ltt9iz/image/upload/v1757585356/job_ruuqp1.svg"
+              />
+            </div>
           ) : jobs.length === 0 ? (
             <p className="text-gray-500 col-span-full text-center">
               No featured jobs found.

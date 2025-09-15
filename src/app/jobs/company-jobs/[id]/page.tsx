@@ -9,6 +9,7 @@ import JobCard from "@/components/JobCard";
 import SearchBar from "@/components/SearchBar";
 import Loading from "@/components/ui/loading";
 import Image from "next/image";
+import EmptyState from "@/components/ui/empty-state";
 
 const fetchJobs = async (params: Record<string, any>) => {
   const res = await axiosInstance.get("/api/jobs/company-jobs", { params });
@@ -42,7 +43,16 @@ export default function CompanyJobsPage() {
   const companyLogo = jobs[0]?.companyLogo;
 
   if (isLoading) return <Loading />;
-  if (isError) return <p>Error loading company jobs.</p>;
+  if (isError || jobs.length === 0)
+    return (
+      <div className="flex justify-center col-span-full mt-20">
+        <EmptyState
+          title="No jobs available"
+          description="Please try again later."
+          image="https://res.cloudinary.com/dw1ltt9iz/image/upload/v1757585356/job_ruuqp1.svg"
+        />
+      </div>
+    );
 
   return (
     <div className="min-h-screen p-4 sm:p-10 font-sans space-y-6">
@@ -50,7 +60,10 @@ export default function CompanyJobsPage() {
         <div className="flex items-center gap-4 mb-6">
           <div className="w-14 h-14 relative bg-white rounded-md border shadow">
             <Image
-              src={companyLogo || "/company.png"}
+              src={
+                companyLogo ||
+                "https://res.cloudinary.com/dw1ltt9iz/image/upload/v1757929805/company_pd8dc7.png"
+              }
               alt={`${companyName} Logo`}
               fill
               className="object-contain p-2"
