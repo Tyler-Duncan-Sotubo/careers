@@ -91,8 +91,6 @@ export function ApplicationForm({ data, onSubmit, error }: Props) {
     defaultValues, // ✅ correctly aligned with field/question IDs
   });
 
-  console.log("Form default values:", form.getValues());
-
   const { handleSubmit, control } = form;
 
   const renderField = (field: any) => {
